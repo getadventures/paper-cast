@@ -4,7 +4,10 @@ declare(strict_types=1);
 function site_url(string $path = ''): string
 {
     $script = str_replace('\\\\', '/', (string) ($_SERVER['SCRIPT_NAME'] ?? '/'));
-    $base = rtrim(dirname($script), '/.');
+    $base = strpos($script, '/admin/') !== false
+        ? dirname($script, 3)
+        : dirname($script);
+    $base = rtrim($base, '/.');
     return ($base === '' ? '' : $base) . '/' . ltrim($path, '/');
 }
 
