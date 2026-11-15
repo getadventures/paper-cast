@@ -1,41 +1,35 @@
 # Paper Cast
 
-A lightweight PHP + MySQL blog starter with an editorial-style public site and a searchable Help Center.
-
-## Requirements
-- PHP 8.1+
-- MySQL 5.7+ or MariaDB 10.4+
-- Apache (XAMPP supported)
-- PHP extensions: PDO MySQL and mbstring
+Paper Cast is a PHP 8.1+ / MySQL editorial CMS with switchable presentation themes. The original Paper Cast design remains the default.
 
 ## Installation
-1. Put this folder in your web root, e.g. `htdocs/paper-cast`.
-2. Create a MySQL database named `paper_cast`.
-3. Import `database/schema.sql` using phpMyAdmin or the MySQL CLI. The same file also creates the missing `posts` table when updating an existing database; it does not drop existing tables.
-4. Copy `config/database.example.php` to `config/database.php` and set your credentials.
-5. Open `http://localhost/paper-cast/`.
-6. Open the searchable documentation at `http://localhost/paper-cast/help/`.
+1. Copy the project into your Apache web root (XAMPP: `htdocs/paper-cast`).
+2. Create/import the database by running `database/schema.sql` in phpMyAdmin.
+3. Copy `config/database.example.php` to `config/database.php` and enter your database credentials.
+4. Visit `http://localhost/paper-cast/admin/setup.php` and create the first administrator. The setup page locks after the first account is created.
+5. Sign in at `/admin/login.php`; public pages are at the site root.
 
-## Included
-- Editorial-style responsive blog homepage
-- Published article detail pages
-- Category and post database schema with sample content
-- Reusable PHP helpers and PDO connection bootstrap
-- Searchable Help Center with installation, configuration, publishing, troubleshooting, and developer topics
+## CMS features
+- Admin login, logout, session regeneration, password hashing, and CSRF checks.
+- Dashboard and article CRUD with draft/published states, categories, slugs, and cover images.
+- Public article search across title, excerpt, and content.
+- About Us content editor.
+- Comment submission with moderation (comments require approval).
+- Like/unlike per browser session token.
+- Image upload library (JPEG, PNG, GIF, WebP, 5 MB limit).
+- Theme discovery and activation through Appearance.
 
-## Current development scope
-The current starter provides the public reading experience and documentation. An authenticated admin dashboard, post editor, media manager, and role management are not implemented yet and are planned for later development.
+## Themes
+- `themes/paper-cast/` reuses the existing Paper Cast visual design.
+- `themes/newspress/` is the alternate newspaper layout.
+- Theme files only render data passed by the core. Keep database and security logic outside themes.
 
-## Project structure
-- `index.php` — public homepage
-- `article.php` — article detail
-- `config/` — database bootstrap and local settings example
-- `includes/` — shared PHP helpers and layout
-- `database/schema.sql` — database schema and sample article
-- `assets/` — CSS and JavaScript
-- `help/` — searchable documentation
+## Security and deployment
+- Keep `config/database.php` private and never commit real credentials.
+- Use HTTPS in production.
+- Restrict write permissions to `uploads/`; PHP execution is disabled there by `.htaccess` on Apache.
+- `admin/setup.php` returns 403 once an administrator exists.
+- This repository update has not been runtime-tested against your local XAMPP/MySQL instance. Import the updated schema before using the new CMS tables.
 
-## Security
-Never commit real credentials. Keep `config/database.php` private, use HTTPS in production, and configure the web server to deny direct access to configuration and SQL files.
-
-No license has been selected yet.
+## Requirements
+PHP 8.1+, PDO MySQL, iconv, mbstring, MySQL 5.7+ or MariaDB 10.4+, Apache.

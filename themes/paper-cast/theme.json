@@ -1,0 +1,7 @@
+{
+  "name":"Paper Cast Original",
+  "slug":"paper-cast",
+  "version":"1.0.0",
+  "description":"The original clean editorial theme.",
+  "supports":["home","article","search","category","about"]
+}

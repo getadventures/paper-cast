@@ -1,0 +1,3 @@
+<?php
+declare(strict_types=1);
+require dirname(__DIR__,2).'/config/bootstrap.php';require dirname(__DIR__,2).'/app/admin.php';admin_require($pdo);if($_SERVER['REQUEST_METHOD']!=='POST'){http_response_code(405);exit;}admin_verify_csrf();if(!$themeManager->activate((string)($_POST['theme']??''))){http_response_code(422);exit('Theme unavailable.');}admin_flash('Theme activated.');header('Location: '.admin_url('appearance/'));exit;
