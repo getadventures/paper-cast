@@ -1,9 +1,4 @@
 <?php
 declare(strict_types=1);
-require dirname(__DIR__, 2) . '/config/bootstrap.php';
-if (empty($_SESSION['admin_id'])) {
-    http_response_code(403);
-    exit('Admin authentication is not configured yet.');
-}
-$themes = $themeManager->all();
-?><!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Theme Manager · Paper Cast</title><link rel="stylesheet" href="<?= e(site_url('admin/assets/admin.css')) ?>"></head><body><main class="panel"><h1>Theme Manager</h1><p>Change the public design without changing posts or categories.</p><div class="themes"><?php foreach ($themes as $theme): ?><article><div class="preview"><?= e(strtoupper(substr($theme['name'], 0, 1))) ?></div><h2><?= e($theme['name']) ?></h2><p><?= e($theme['description'] ?? '') ?></p><?php if (($activeTheme['slug'] ?? '') === $theme['slug']): ?><strong>Active theme</strong><?php else: ?><form method="post" action="save.php"><input type="hidden" name="theme" value="<?= e($theme['slug']) ?>"><input type="hidden" name="_token" value="<?= e($_SESSION['csrf_token'] ?? '') ?>"><button>Activate theme</button></form><?php endif ?></article><?php endforeach ?></div></main></body></html>
+require dirname(__DIR__,2).'/config/bootstrap.php';require dirname(__DIR__,2).'/app/admin.php';$admin=admin_require($pdo);$themes=$themeManager->all();
+admin_header('Appearance',$admin);admin_show_flash(); ?><section class="content-card"><h2>Choose a theme</h2><p>Changing the theme changes presentation only. Articles, comments, and settings remain intact.</p><div class="themes"><?php foreach($themes as $theme): ?><article><div class="preview"><?= e(strtoupper(substr($theme['name'],0,1))) ?></div><h3><?= e($theme['name']) ?></h3><p><?= e($theme['description']??'') ?></p><?php if(($activeTheme['slug']??'')===$theme['slug']): ?><strong class="active-label">Currently active</strong><?php else: ?><form method="post" action="<?= e(admin_url('appearance/save.php')) ?>"><?= admin_csrf_field() ?><input type="hidden" name="theme" value="<?= e($theme['slug']) ?>"><button class="button">Activate theme</button></form><?php endif ?></article><?php endforeach ?></div></section><?php admin_footer(); ?>
