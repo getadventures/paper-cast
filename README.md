@@ -32,4 +32,4 @@ Paper Cast is a PHP 8.1+ / MySQL editorial CMS with switchable presentation them
 - This repository update has not been runtime-tested against your local XAMPP/MySQL instance. Import the updated schema before using the new CMS tables.
 
 ## Requirements
-PHP 8.1+, PDO MySQL, fileinfo, mbstring, MySQL 5.7+ or MariaDB 10.4+, Apache.
+PHP 8.1+, PDO MySQL, iconv, mbstring, MySQL 5.7+ or MariaDB 10.4+, Apache.
