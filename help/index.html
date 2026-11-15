@@ -1,0 +1,39 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="description" content="Paper Cast Help Center"><title>Help Center — Paper Cast</title><link rel="stylesheet" href="help.css"></head>
+<body>
+<header class="head"><a class="logo" href="../index.php">paper<span>cast</span><b>.</b></a><a href="../index.php">← Visit the blog</a></header>
+<section class="hero"><small>PAPER CAST DOCUMENTATION</small><h1>How can we help?</h1><p>Find setup instructions, publishing guides, and solutions to common problems.</p><label class="search"><span>⌕</span><input id="q" type="search" placeholder="Search articles, topics, or keywords…" autocomplete="off"><kbd>/</kbd></label><div id="status" aria-live="polite">Search across all help articles</div></section>
+<main class="layout"><aside class="side"><b>HELP TOPICS</b><a href="#start">Getting started</a><a href="#install">Installation</a><a href="#config">Configuration</a><a href="#publish">Publishing</a><a href="#content">Content management</a><a href="#trouble">Troubleshooting</a><a href="#dev">Developer guide</a></aside>
+<section class="docs"><div id="none" class="none" hidden><h2>No matching articles</h2><p>Try another keyword, such as “database”, “PHP”, or “publish”.</p></div>
+<section class="topic" id="start"><header><small>01 · OVERVIEW</small><h2>Getting started</h2></header><div class="cards">
+<article data-keys="what is paper cast overview blog publication"><h3>What is Paper Cast?</h3><p>Paper Cast is a lightweight PHP and MySQL blog starter with an editorial-style public homepage and a built-in Help Center.</p><small>Overview · 2 min read</small></article>
+<article data-keys="requirements server php mysql apache xampp extensions"><h3>System requirements</h3><p>Use PHP 8.1+, MySQL 5.7+ or MariaDB 10.4+, Apache, and enable the PDO MySQL and mbstring PHP extensions.</p><small>Before you install · 2 min read</small></article>
+</div></section>
+<section class="topic" id="install"><header><small>02 · SETUP</small><h2>Installation</h2></header><div class="cards">
+<article data-keys="install xampp windows localhost htdocs"><h3>Install on XAMPP</h3><ol><li>Place the project folder inside <code>xampp/htdocs/</code>.</li><li>Start Apache and MySQL.</li><li>Create a database named <code>paper_cast</code> in phpMyAdmin.</li><li>Import <code>database/schema.sql</code>.</li><li>Copy <code>config/database.example.php</code> to <code>config/database.php</code> and enter your local credentials.</li><li>Open <code>http://localhost/paper-cast/</code>.</li></ol><small>Installation · 5 min read</small></article>
+<article data-keys="database import sql phpmyadmin schema"><h3>Import the database</h3><p>In phpMyAdmin, select the <code>paper_cast</code> database, choose Import, select <code>database/schema.sql</code>, and run it. The schema creates the categories and posts tables and inserts sample content.</p><small>Database · 3 min read</small></article>
+<article data-keys="database credentials host username password connection"><h3>Configure database access</h3><p>Copy the example config to <code>config/database.php</code>. Set the host, database name, username, and password to match your MySQL setup. Never commit real credentials.</p><small>Configuration · 3 min read</small></article>
+</div></section>
+<section class="topic" id="config"><header><small>03 · SETTINGS</small><h2>Configuration</h2></header><div class="cards">
+<article data-keys="customize appearance design colors typography css"><h3>Customize the appearance</h3><p>Edit <code>assets/css/style.css</code> to adjust colors, spacing, typography, and responsive layouts. Shared page layout is in <code>includes/</code>.</p><small>Design · 3 min read</small></article>
+<article data-keys="security production credentials apache config"><h3>Production security</h3><p>Use a dedicated database account with limited privileges, HTTPS, regular backups, and server rules that block direct access to configuration and SQL files. Never expose database credentials.</p><small>Security · 4 min read</small></article>
+</div></section>
+<section class="topic" id="publish"><header><small>04 · EDITORIAL</small><h2>Publishing</h2></header><div class="cards">
+<article data-keys="create write edit post article title slug excerpt content"><h3>How articles work</h3><p>Articles are stored in the <code>posts</code> table. Each post has a title, unique slug, excerpt, content, optional cover image, category, and publication status.</p><small>Articles · 3 min read</small></article>
+<article data-keys="draft publish status published date article"><h3>Drafts and published posts</h3><p>The public homepage and article detail page currently display posts with status <code>published</code>. Draft posts remain hidden from public pages.</p><small>Publishing · 2 min read</small></article>
+</div></section>
+<section class="topic" id="content"><header><small>05 · CONTENT</small><h2>Content management</h2></header><div class="cards">
+<article data-keys="categories taxonomy category slug database"><h3>Categories</h3><p>Categories organize stories by topic. Add or edit records in the <code>categories</code> table. Each category needs a unique slug.</p><small>Organization · 2 min read</small></article>
+<article data-keys="images media cover image upload path"><h3>Cover images</h3><p>The <code>cover_image</code> field stores an image path or URL. The current starter displays it on article cards and article pages. A managed media library is a future enhancement.</p><small>Media · 2 min read</small></article>
+</div></section>
+<section class="topic" id="trouble"><header><small>06 · SUPPORT</small><h2>Troubleshooting</h2></header><div class="cards">
+<article data-keys="database configuration missing unable connect pdo mysql error"><h3>Database connection error</h3><p>Confirm MySQL is running, the database exists, credentials in <code>config/database.php</code> are correct, and PDO MySQL is enabled in PHP.</p><small>Common issue · 2 min read</small></article>
+<article data-keys="404 not found article slug url"><h3>Article not found</h3><p>Check that the article exists, its slug matches the URL, and its status is <code>published</code>. Draft articles are hidden from public pages.</p><small>Common issue · 2 min read</small></article>
+<article data-keys="blank page php errors apache log syntax"><h3>Blank page or PHP error</h3><p>Check the Apache/PHP error log. During local development, enable errors locally; turn detailed error output off on production sites.</p><small>Debugging · 3 min read</small></article>
+</div></section>
+<section class="topic" id="dev"><header><small>07 · ENGINEERING</small><h2>Developer guide</h2></header><div class="cards">
+<article data-keys="folder structure php includes config database assets"><h3>Project structure</h3><p><code>config/</code> contains connection setup, <code>includes/</code> contains shared PHP helpers and layout, <code>assets/</code> contains CSS and JavaScript, and <code>database/</code> contains the SQL schema.</p><small>Architecture · 3 min read</small></article>
+<article data-keys="pdo prepared statements sql injection escaping security"><h3>Database and output safety</h3><p>Use PDO prepared statements for user-provided values and escape dynamic HTML with <code>e()</code>. Validate and authorize future administrative actions on the server.</p><small>Best practices · 3 min read</small></article>
+</div></section></section></main>
+<footer><a class="logo" href="../index.php">paper<span>cast</span><b>.</b></a><p>Search the documentation above to find the guidance you need.</p><small>Paper Cast Help Center</small></footer>
+<script src="help.js"></script></body></html>
