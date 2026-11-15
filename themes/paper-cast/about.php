@@ -1,0 +1,1 @@
+<?php require dirname(__DIR__,2).'/includes/header.php'; ?><article class="article-detail"><span class="eyebrow">OUR STORY</span><h1><?= e($aboutTitle) ?></h1><div class="article-body"><?= nl2br(e($aboutContent)) ?></div></article><?php require dirname(__DIR__,2).'/includes/footer.php'; ?>
