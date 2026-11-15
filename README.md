@@ -11,7 +11,7 @@ A lightweight PHP + MySQL blog starter with an editorial-style public site and a
 ## Installation
 1. Put this folder in your web root, e.g. `htdocs/paper-cast`.
 2. Create a MySQL database named `paper_cast`.
-3. Import `database/schema.sql` using phpMyAdmin or the MySQL CLI.
+3. Import `database/schema.sql` using phpMyAdmin or the MySQL CLI. The same file also creates the missing `posts` table when updating an existing database; it does not drop existing tables.
 4. Copy `config/database.example.php` to `config/database.php` and set your credentials.
 5. Open `http://localhost/paper-cast/`.
 6. Open the searchable documentation at `http://localhost/paper-cast/help/`.
