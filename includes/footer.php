@@ -1,0 +1,1 @@
+</main><footer><div class="container footer-inner"><a class="brand small" href="index.php">paper<span>cast</span><i>.</i></a><p>Independent stories, thoughtfully published.</p><small>&copy; <?= date('Y') ?> Paper Cast.</small></div></footer><script src="assets/js/app.js"></script></body></html>
