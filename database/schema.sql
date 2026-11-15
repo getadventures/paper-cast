@@ -10,8 +10,6 @@ CREATE TABLE IF NOT EXISTS categories (
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
--- Keep this table independent from a pre-existing categories table structure.
--- category_id is indexed but intentionally has no foreign key constraint.
 CREATE TABLE IF NOT EXISTS posts (
     id BIGINT UNSIGNED NOT NULL AUTO_INCREMENT,
     category_id INT UNSIGNED NULL,
@@ -30,20 +28,24 @@ CREATE TABLE IF NOT EXISTS posts (
     KEY idx_posts_category (category_id)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
--- Add default categories on a fresh installation; existing categories are not overwritten.
+CREATE TABLE IF NOT EXISTS settings (
+    id BIGINT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+    setting_key VARCHAR(100) NOT NULL UNIQUE,
+    setting_value TEXT NULL,
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+INSERT IGNORE INTO settings (setting_key, setting_value) VALUES ('active_theme', 'paper-cast');
+
 INSERT IGNORE INTO categories (name, slug) VALUES
     ('Culture', 'culture'),
     ('Ideas', 'ideas'),
     ('Technology', 'technology'),
     ('Lifestyle', 'lifestyle');
 
--- Add one sample article only when the posts table is empty.
 INSERT INTO posts (category_id, title, slug, excerpt, content, status, published_at)
-SELECT NULL,
-       'Welcome to Paper Cast',
-       'welcome-to-paper-cast',
+SELECT NULL, 'Welcome to Paper Cast', 'welcome-to-paper-cast',
        'A new home for thoughtful ideas, useful discoveries, and stories worth sharing.',
        'Paper Cast is an independent publication built around curiosity. Replace this sample with your first story.',
-       'published',
-       NOW()
+       'published', NOW()
 WHERE NOT EXISTS (SELECT 1 FROM posts);
