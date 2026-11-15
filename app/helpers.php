@@ -1,17 +1,14 @@
 <?php
 declare(strict_types=1);
 
-function e(?string $value): string
-{
-    return htmlspecialchars($value ?? '', ENT_QUOTES, 'UTF-8');
-}
-
 function site_url(string $path = ''): string
 {
-    global $config;
-    return rtrim($config['app']['base_url'], '/') . '/' . ltrim($path, '/');
+    $script = str_replace('\\\\', '/', (string) ($_SERVER['SCRIPT_NAME'] ?? '/'));
+    $base = rtrim(dirname($script), '/.');
+    return ($base === '' ? '' : $base) . '/' . ltrim($path, '/');
 }
 
+/** Render a view from the active theme. CMS queries remain in core controllers. */
 function render_theme(ThemeManager $manager, array $theme, string $view, array $data = []): void
 {
     extract($data, EXTR_SKIP);
