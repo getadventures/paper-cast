@@ -1,12 +1,8 @@
 <?php
-if (!$post) {
-    $pageTitle = 'Article not found — Paper Cast';
-    require dirname(__DIR__, 2) . '/includes/header.php';
-    echo '<section class="empty-state"><h1>Story not found</h1><a href="index.php">Back to home</a></section>';
-    require dirname(__DIR__, 2) . '/includes/footer.php';
-    return;
-}
-require dirname(__DIR__, 2) . '/includes/header.php';
+if (!$post) { $pageTitle='Article not found — Paper Cast'; require dirname(__DIR__,2).'/includes/header.php'; echo '<section class="empty-state"><h1>Story not found</h1><a href="'.e(site_url()).'">Back to home</a></section>'; require dirname(__DIR__,2).'/includes/footer.php'; return; }
+require dirname(__DIR__,2).'/includes/header.php';
 ?>
-<article class="article-detail"><a href="index.php">← All stories</a><div class="meta"><?= e($post['category_name'] ?: 'Journal') ?> · <?= e(date('M j, Y', strtotime($post['published_at'] ?: 'now'))) ?></div><h1><?= e($post['title']) ?></h1><?php if ($post['excerpt']): ?><p class="lead"><?= e($post['excerpt']) ?></p><?php endif; ?><?php if ($post['cover_image']): ?><img class="detail-cover" src="<?= e($post['cover_image']) ?>" alt=""><?php endif; ?><div class="article-body"><?= nl2br(e($post['content'])) ?></div></article>
-<?php require dirname(__DIR__, 2) . '/includes/footer.php'; ?>
+<article class="article-detail"><a href="<?= e(site_url()) ?>">← All stories</a><div class="meta"><?= e($post['category_name']?:'Journal') ?> · <?= e(date('M j, Y',strtotime($post['published_at']?:'now'))) ?></div><h1><?= e($post['title']) ?></h1><?php if($post['excerpt']): ?><p class="lead"><?= e($post['excerpt']) ?></p><?php endif ?><?php if($post['cover_image']): ?><img class="detail-cover" src="<?= e($post['cover_image']) ?>" alt=""><?php endif ?><div class="article-body"><?= nl2br(e($post['content'])) ?></div></article>
+<section id="article-actions" class="reader-actions"><form method="post" action="<?= e(site_url('like.php')) ?>"><input type="hidden" name="_token" value="<?= e($_SESSION['csrf_token']) ?>"><input type="hidden" name="post_id" value="<?= (int)$post['id'] ?>"><input type="hidden" name="slug" value="<?= e($post['slug']) ?>"><button class="like-button" type="submit"><?= $liked?'♥ Liked':'♡ Like' ?> · <?= (int)$likeCount ?></button></form></section>
+<section id="comments" class="comments-area"><h2>Comments (<?= count($comments) ?>)</h2><?php if(!empty($_SESSION['comment_notice'])): ?><p class="notice"><?= e($_SESSION['comment_notice']) ?></p><?php unset($_SESSION['comment_notice']);endif ?><?php foreach($comments as $comment): ?><article class="reader-comment"><strong><?= e($comment['name']) ?></strong><small><?= e(date('M j, Y',strtotime($comment['created_at']))) ?></small><p><?= nl2br(e($comment['body'])) ?></p></article><?php endforeach ?><?php if(!$comments): ?><p class="muted">No approved comments yet. Start the conversation.</p><?php endif ?><form class="comment-form" method="post" action="<?= e(site_url('comment.php')) ?>"><h3>Leave a comment</h3><input type="hidden" name="_token" value="<?= e($_SESSION['csrf_token']) ?>"><input type="hidden" name="post_id" value="<?= (int)$post['id'] ?>"><input type="hidden" name="slug" value="<?= e($post['slug']) ?>"><label>Name<input name="name" maxlength="100" required></label><label>Email (not published)<input type="email" name="email" maxlength="190" required></label><label>Comment<textarea name="body" rows="5" maxlength="3000" required></textarea></label><button type="submit">Submit comment</button><small>Comments are reviewed before appearing publicly.</small></form></section>
+<?php require dirname(__DIR__,2).'/includes/footer.php'; ?>
