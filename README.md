@@ -1,32 +1,35 @@
 # Paper Cast
 
-Paper Cast is a PHP + MySQL editorial blog starter. Its public presentation is now separated into switchable themes while the existing Paper Cast visual design remains the default theme.
-
-## Requirements
-- PHP 8.1+
-- MySQL 5.7+ or MariaDB 10.4+
-- Apache (XAMPP supported)
-- PDO MySQL and mbstring extensions
+Paper Cast is a PHP 8.1+ / MySQL editorial CMS with switchable presentation themes. The original Paper Cast design remains the default.
 
 ## Installation
-1. Place the project in your web root, e.g. `htdocs/paper-cast`.
-2. Create the `paper_cast` database and import `database/schema.sql`.
-3. Copy `config/database.example.php` to `config/database.php` and set your local credentials.
-4. Open `http://localhost/paper-cast/`.
+1. Copy the project into your Apache web root (XAMPP: `htdocs/paper-cast`).
+2. Create/import the database by running `database/schema.sql` in phpMyAdmin.
+3. Copy `config/database.example.php` to `config/database.php` and enter your database credentials.
+4. Visit `http://localhost/paper-cast/admin/setup.php` and create the first administrator. The setup page locks after the first account is created.
+5. Sign in at `/admin/login.php`; public pages are at the site root.
 
-## Theme system
-- `themes/paper-cast/` preserves the original Paper Cast editorial layout.
-- `themes/newspress/` is an alternative newspaper-inspired layout.
-- Theme manifests are stored in each theme's `theme.json`.
-- The active theme is stored in the `settings` table under `active_theme`.
-- Theme views render data supplied by the core; posts and categories remain independent of the active theme.
+## CMS features
+- Admin login, logout, session regeneration, password hashing, and CSRF checks.
+- Dashboard and article CRUD with draft/published states, categories, slugs, and cover images.
+- Public article search across title, excerpt, and content.
+- About Us content editor.
+- Comment submission with moderation (comments require approval).
+- Like/unlike per browser session token.
+- Image upload library (JPEG, PNG, GIF, WebP, 5 MB limit).
+- Theme discovery and activation through Appearance.
 
-The theme loader is in `app/ThemeManager.php`. Theme documentation: [help/theme-system.md](help/theme-system.md).
+## Themes
+- `themes/paper-cast/` reuses the existing Paper Cast visual design.
+- `themes/newspress/` is the alternate newspaper layout.
+- Theme files only render data passed by the core. Keep database and security logic outside themes.
 
-## Current milestone
-Implemented: theme discovery, active-theme lookup, theme view loading, two initial theme layouts, and a protected Theme Manager screen.
+## Security and deployment
+- Keep `config/database.php` private and never commit real credentials.
+- Use HTTPS in production.
+- Restrict write permissions to `uploads/`; PHP execution is disabled there by `.htaccess` on Apache.
+- `admin/setup.php` returns 403 once an administrator exists.
+- This repository update has not been runtime-tested against your local XAMPP/MySQL instance. Import the updated schema before using the new CMS tables.
 
-Not yet implemented: admin login/session management, working admin theme activation UI, post editor, full article search, About Us content editor, comments, likes, media library, and visual theme customizer. The Theme Manager deliberately denies access until admin authentication is implemented; do not remove its access guard on a public server.
-
-## Existing project files
-The original `includes/` and `assets/css/style.css` layout are retained and reused by the Paper Cast Original theme.
+## Requirements
+PHP 8.1+, PDO MySQL, fileinfo, mbstring, MySQL 5.7+ or MariaDB 10.4+, Apache.
